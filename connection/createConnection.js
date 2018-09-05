@@ -1,8 +1,8 @@
 const mysql = require('mysql');
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'username',
-    password: 'password',
+    user: 'root',
+    password: 'admin',
     database: 'Lattis'
 
 });
@@ -13,3 +13,5 @@ connection.connect(function(err){
     }
     console.log('Database connected!!');
 });
+
+module.exports = connection;
