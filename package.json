@@ -1,0 +1,19 @@
+{
+  "name": "lattis-api-design",
+  "version": "0.1.0",
+  "description": "REST API Design",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madguy02/Lattis-API-Design.git"
+  },
+  "author": "Manish Kakoti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/madguy02/Lattis-API-Design/issues"
+  },
+  "homepage": "https://github.com/madguy02/Lattis-API-Design#readme"
+}
