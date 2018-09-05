@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const connection = require('../connection/createConnection');
+const bcrypt = require('bcrypt');
 
 exports.register = function(req,res){
+    var hashValue = bcrypt.hashSync(req.body.password, 10);
     var users={
       "first_name":req.body.first_name,
       "last_name":req.body.last_name,
       "username":req.body.username,
-      "password":req.body.password,
+      "password":hashValue,
       "birthDate": req.body.birthDate
     }
     connection.query('INSERT INTO User SET ?',users, function (error, results, fields) {
