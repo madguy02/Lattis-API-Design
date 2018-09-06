@@ -12,3 +12,5 @@ A demo API design
 - [x] Bcrypt passwords
 - [ ] Update User
 - [ ] Delete User
+
+##### Task List for Locks
