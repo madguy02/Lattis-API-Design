@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const registerQuery = 'INSERT INTO User SET ?'; //sql query to register
 
 exports.register = function(req,res){
-    var hashValue = bcrypt.hashSync(req.body.password, 10);
+  var hashValue = bcrypt.hashSync(req.body.password, 10);
     var users={
       "first_name":req.body.first_name,
       "last_name":req.body.last_name,
