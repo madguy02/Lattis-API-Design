@@ -3,6 +3,8 @@ const router = express.Router();
 const connection = require('../connection/createConnection');
 const bcrypt = require('bcrypt');
 
+const registerQuery = 'INSERT INTO User SET ?'; //sql query to register
+
 exports.register = function(req,res){
     var hashValue = bcrypt.hashSync(req.body.password, 10);
     var users={
@@ -12,7 +14,7 @@ exports.register = function(req,res){
       "password":hashValue,
       "birthDate": req.body.birthDate
     }
-    connection.query('INSERT INTO User SET ?',users, function (error, results, fields) {
+    connection.query(registerQuery, users, function (error, results, fields) {
     if (error) {
       console.log("error ocurred",error);
       res.send({
