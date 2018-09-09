@@ -18,6 +18,8 @@ app.get('/', function(req, res){
 
 router.post('/register',register.register);
 router.post('/login',login.login);
+router.delete('/user/:id', login.delete);
+router.put('/user/:id', login.update);
 app.use('/api', router);
 
 var server = app.listen(3000, 'localhost', function(){
