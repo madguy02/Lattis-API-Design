@@ -22,6 +22,8 @@ router.post('/login',login.login);
 router.post('/addLock',lock.registerLock);
 router.put('/updateLock/:id',lock.update);
 router.put('/deleteLock/:id', lock.delete);
+router.delete('/user/:id', login.delete);
+router.put('/user/:id', login.update);
 app.use('/api', router);
 
 var server = app.listen(3000, 'localhost', function(){
