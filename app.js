@@ -1,6 +1,7 @@
 var express = require("express");
 var register = require('./routes/register');
 var login = require('./routes/login');
+var lock = require('./routes/locks');
 var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,6 +19,9 @@ app.get('/', function(req, res){
 
 router.post('/register',register.register);
 router.post('/login',login.login);
+router.post('/addLock',lock.registerLock);
+router.put('/updateLock/:id',lock.update);
+router.put('/deleteLock/:id', lock.delete);
 app.use('/api', router);
 
 var server = app.listen(3000, 'localhost', function(){
