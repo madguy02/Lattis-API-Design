@@ -6,6 +6,7 @@ const uuid = require('uuid');
 
 const registerQuery = 'INSERT INTO `Lock` (macid, first_name, username) VALUES (?, ?, ?)';//sql query to register lock
 
+
 exports.registerLock = function(req,res){
    var macid = uuid();
    let locks = {
@@ -77,7 +78,30 @@ exports.registerLock = function(req,res){
       });
 
     }
-
+  
+    exports.users = function(req, res) {
+      let id = req.params.id;
+      
+        let listQuery = 'SELECT username from `Lock`';
+        connection.query(listQuery, function(error, results, fields){
+          if (error) {
+            throw error;
+            res.send({
+              "code":400,
+              "failed":"error ocurred"
+            });
+          }
+  
+          else {
+            res.send({
+              results
+                });
+          }
+  
+        });
+  
+      }
+    
   /*
   CREATE TABLE `Lock` (
          `id` int(200) NOT NULL AUTO_INCREMENT,

@@ -15,6 +15,7 @@ exports.login = function(req,res){
         "code":400,
         "failed":"error ocurred"
       })
+      
     }else{
         
         if (results.length > 0) {
@@ -30,6 +31,7 @@ exports.login = function(req,res){
             "code":204,
             "success":"username and password does not match"
               });
+              
         }
      }
       else{
@@ -37,6 +39,7 @@ exports.login = function(req,res){
           "code":204,
           "success":"username does not exits"
             });
+          
       }
     }
     });
