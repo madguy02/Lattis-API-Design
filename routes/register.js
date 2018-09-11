@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const connection = require('../connection/createConnection');
 const bcrypt = require('bcrypt');
+const config = require('../config/config');
+const jwt = require('jsonwebtoken');
 
 const registerQuery = 'INSERT INTO User SET ?'; //sql query to register
 
@@ -21,13 +23,17 @@ exports.register = function(req,res){
         "code":400,
         "failed":"error ocurred"
       })
-    }else{
+    }
+    
+    // var token = jwt.sign({ id: users.id }, config.secret, {
+    //   expiresIn: 86400
+    // });
       console.log('The solution is: ', results);
       res.send({
         "code":200,
         "success":"user registered sucessfully"
           });
-    }
+    
     });
   }
 

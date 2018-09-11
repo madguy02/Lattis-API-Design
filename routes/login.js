@@ -2,13 +2,16 @@ const express = require('express');
 const router = express.Router();
 const connection = require('../connection/createConnection');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
+const verifyToken = require('./verifyToken');
 
 exports.login = function(req,res){
+    let id = req.params.id;
     let username= req.body.username;
     let password = req.body.password;
      let loginQuery = 'SELECT * FROM User WHERE username = ?';
-     
-    connection.query(loginQuery,[username], function (error, results, fields) {
+    connection.query(loginQuery,[username, password], function (error, results, fields) {
     if (error) {
         console.log(error);
       res.send({
@@ -19,10 +22,14 @@ exports.login = function(req,res){
     }else{
         
         if (results.length > 0) {
+          var token = jwt.sign({ username: username }, config.secret, {
+            expiresIn: 86400 // expires in 24 hours
+          });
         if(bcrypt.compareSync(password, results[0].password)){
           res.send({
             "code":200,
-            "success":"login sucessfull"
+            "success":"login sucessfull",
+            "token": token
               });
               
             }
@@ -34,13 +41,14 @@ exports.login = function(req,res){
               
         }
      }
-      else{
+    else {
         res.send({
           "code":204,
-          "success":"username does not exits"
+          "success":"username does not exits",
+        
             });
-          
-      }
+          } 
+      
     }
     });
   }
@@ -94,5 +102,23 @@ exports.login = function(req,res){
       }
       });
   }
-
+  exports.me = function(req, res) {
+    
+    var meQuery = 'SELECT * FROM User WHERE username = ?'
+      connection.query(meQuery,[req.username], function(error, results, fields){
+        // console.log(decoded);
+        if (error) {
+          throw error;
+          res.send({
+            "code": 400,
+          })
+        }
+        else {
+          res.send({
+            "code": 200,
+            results
+          })
+        }
+      })
+  }
   

@@ -1,9 +1,11 @@
-var express = require("express");
-var register = require('./routes/register');
-var login = require('./routes/login');
-var lock = require('./routes/locks');
-var bodyParser = require('body-parser');
-var app = express();
+const express = require("express");
+const register = require('./routes/register');
+const login = require('./routes/login');
+const lock = require('./routes/locks');
+const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
+const verifyToken = require('./routes/verifyToken');
+const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
@@ -25,6 +27,7 @@ router.put('/deleteLock/:id', lock.delete);
 router.delete('/user/:id', login.delete);
 router.put('/user/:id', login.update);
 router.get('/list', lock.users);
+router.get('/me',verifyToken,login.me);
 app.use('/api', router);
 
 var server = app.listen(3000, 'localhost', function(){
