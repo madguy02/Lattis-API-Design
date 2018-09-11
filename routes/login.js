@@ -2,26 +2,34 @@ const express = require('express');
 const router = express.Router();
 const connection = require('../connection/createConnection');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
+const verifyToken = require('./verifyToken');
 
 exports.login = function(req,res){
+    let id = req.params.id;
     let username= req.body.username;
     let password = req.body.password;
      let loginQuery = 'SELECT * FROM User WHERE username = ?';
-     
-    connection.query(loginQuery,[username], function (error, results, fields) {
+    connection.query(loginQuery,[username, password], function (error, results, fields) {
     if (error) {
         console.log(error);
       res.send({
         "code":400,
         "failed":"error ocurred"
       })
+      
     }else{
         
         if (results.length > 0) {
+          var token = jwt.sign({ username: username }, config.secret, {
+            expiresIn: 86400 // expires in 24 hours
+          });
         if(bcrypt.compareSync(password, results[0].password)){
           res.send({
             "code":200,
-            "success":"login sucessfull"
+            "success":"login sucessfull",
+            "token": token
               });
               
             }
@@ -30,14 +38,17 @@ exports.login = function(req,res){
             "code":204,
             "success":"username and password does not match"
               });
+              
         }
      }
-      else{
+    else {
         res.send({
           "code":204,
-          "success":"username does not exits"
+          "success":"username does not exits",
+        
             });
-      }
+          } 
+      
     }
     });
   }
@@ -70,7 +81,6 @@ exports.login = function(req,res){
      
     let updateQuery = 'UPDATE User SET first_name=?, last_name=?, birthDate=? WHERE id=?'
       let id = req.params.id;
-      console.log("Thar"+id);
      let first_name = req.body.first_name;
      let last_name = req.body.last_name;
      let birthDate = req.body.birthDate;
@@ -83,7 +93,6 @@ exports.login = function(req,res){
           "failed":"error ocurred"
         })
       }else{
-        console.log('The solution is: ', results);
         res.send({
           "code":200,
           "success":"user updated successfully"
@@ -91,5 +100,23 @@ exports.login = function(req,res){
       }
       });
   }
-
+  exports.me = function(req, res) {
+    
+    var meQuery = 'SELECT User.first_name, User.last_name, User.birthDate, `Lock`.lockname FROM User INNER JOIN `Lock` ON User.id = `Lock`.id WHERE User.username=?';
+      connection.query(meQuery,[req.username], function(error, results, fields){
+        // console.log(decoded);
+        if (error) {
+          throw error;
+          res.send({
+            "code": 400,
+          })
+        }
+        else {
+          res.send({
+            "code": 200,
+            results
+          })
+        }
+      })
+  }
   
