@@ -20,12 +20,12 @@ A demo API design
 
 ### Details on REST API endpoints
 
-`/api/register` : Register a User (do not require a token).
-`/api/login` : Login with the registered user (required username and password and x-access-token) **x-access-token will be generated here.
-`/api/user/:id` : Update a user with id (x-access token required).
-`/api/user/:id` : Delete a user (x-access token required).
-`/api/addLock` : Register a lock (x-access token required).
-`/api/updateLock`: Update the details of the lock (lockname x-access token required).
-`/api/deleteLock`: Delete the lock created earlier (x-access token required).
-`/api/me` : List the logged in user's info including the lockname (x-access token required)
-`/api/list`: List all the users with usernames (x-access token required)
+- `/api/register` : Register a User (do not require a token).
+- `/api/login` : Login with the registered user (required username and password and x-access-token) **x-access-token will be generated here.
+- `/api/user/:id` : Update a user with id (x-access token required).
+- `/api/user/:id` : Delete a user (x-access token required).
+- `/api/addLock` : Register a lock (x-access token required).
+- `/api/updateLock`: Update the details of the lock (lockname x-access token required).
+- `/api/deleteLock`: Delete the lock created earlier (x-access token required).
+- `/api/me` : List the logged in user's info including the lockname (x-access token required)
+- `/api/list`: List all the users with usernames (x-access token required)
