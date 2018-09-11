@@ -25,10 +25,6 @@ exports.register = function(req,res){
       })
     }
     
-    // var token = jwt.sign({ id: users.id }, config.secret, {
-    //   expiresIn: 86400
-    // });
-      console.log('The solution is: ', results);
       res.send({
         "code":200,
         "success":"user registered sucessfully"

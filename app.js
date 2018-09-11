@@ -21,12 +21,12 @@ app.get('/', function(req, res){
 
 router.post('/register',register.register);
 router.post('/login',login.login);
-router.post('/addLock',lock.registerLock);
-router.put('/updateLock/:id',lock.update);
-router.put('/deleteLock/:id', lock.delete);
-router.delete('/user/:id', login.delete);
-router.put('/user/:id', login.update);
-router.get('/list', lock.users);
+router.post('/addLock',verifyToken,lock.registerLock);
+router.put('/updateLock/:id',verifyToken, lock.update);
+router.put('/deleteLock/:id',verifyToken, lock.delete);
+router.delete('/user/:id',verifyToken, login.delete);
+router.put('/user/:id',verifyToken, login.update);
+router.get('/list',verifyToken, lock.users);
 router.get('/me',verifyToken,login.me);
 app.use('/api', router);
 

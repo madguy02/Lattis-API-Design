@@ -81,7 +81,6 @@ exports.login = function(req,res){
      
     let updateQuery = 'UPDATE User SET first_name=?, last_name=?, birthDate=? WHERE id=?'
       let id = req.params.id;
-      console.log("Thar"+id);
      let first_name = req.body.first_name;
      let last_name = req.body.last_name;
      let birthDate = req.body.birthDate;
@@ -94,7 +93,6 @@ exports.login = function(req,res){
           "failed":"error ocurred"
         })
       }else{
-        console.log('The solution is: ', results);
         res.send({
           "code":200,
           "success":"user updated successfully"
@@ -104,7 +102,7 @@ exports.login = function(req,res){
   }
   exports.me = function(req, res) {
     
-    var meQuery = 'SELECT * FROM User WHERE username = ?'
+    var meQuery = 'SELECT User.first_name, User.last_name, User.birthDate, `Lock`.lockname FROM User INNER JOIN `Lock` ON User.id = `Lock`.id WHERE User.username=?';
       connection.query(meQuery,[req.username], function(error, results, fields){
         // console.log(decoded);
         if (error) {

@@ -13,7 +13,6 @@ function verifyToken(req, res, next) {
   jwt.verify(token, config.secret, function(err, decoded) {      
     if (err) 
       return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });    
-      console.log(decoded.username);
         req.username = decoded.username;
     next();
   });
